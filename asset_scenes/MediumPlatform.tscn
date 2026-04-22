@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cgvwbix2o5otj"]
+
+[ext_resource type="PackedScene" uid="uid://bjqcje5syb2g5" path="res://assets/medium_platform.glb" id="1_5ba7p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x17yx"]
+size = Vector3(3.58, 0.489, 2.4)
+
+[node name="MediumPlatfrm" unique_id=1469296818 instance=ExtResource("1_5ba7p")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1482356572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_x17yx")

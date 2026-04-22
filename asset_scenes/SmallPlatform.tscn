@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://baw8lpqhn2ea1"]
+
+[ext_resource type="PackedScene" uid="uid://y047i0lgoo58" path="res://assets/small_platform.glb" id="1_m6pia"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jnycu"]
+size = Vector3(2.58, 0.517, 1.9)
+
+[node name="SmallPlatform" unique_id=192816158 instance=ExtResource("1_m6pia")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=330623139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_jnycu")
