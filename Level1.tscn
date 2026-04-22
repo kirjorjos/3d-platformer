@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d2rfwurc6rrj5"]
 
 [ext_resource type="PackedScene" uid="uid://yt68i4i7piwh" path="res://asset_scenes/LargePlatform.tscn" id="1_kyxg0"]
+[ext_resource type="PackedScene" uid="uid://vw8h1q4uaabo" path="res://asset_scenes/Player/Player.tscn" id="2_mc20k"]
 
 [node name="Level1" type="Node3D" unique_id=2092771699]
 
@@ -10,5 +11,5 @@ shadow_enabled = true
 
 [node name="Large Platform" parent="." unique_id=238628005 instance=ExtResource("1_kyxg0")]
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1300631725]
-transform = Transform3D(-0.99772817, -0.041183237, -0.053314183, -0.05958067, 0.90877914, 0.41300157, 0.03144211, 0.41523957, -0.9091691, 0, 3.8426285, -4.650946)
+[node name="Player" parent="." unique_id=1936396485 instance=ExtResource("2_mc20k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3649697, 1.2852712, 0)

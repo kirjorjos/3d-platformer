@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ciro7lx2g0517"]
 
 [ext_resource type="PackedScene" uid="uid://wknlhuwkjkp4" path="res://assets/coin.glb" id="1_h5dih"]
-[ext_resource type="Script" uid="uid://c4xwwuwpfvv1i" path="res://Coin.cs" id="2_ou7jl"]
+[ext_resource type="Script" uid="uid://c4xwwuwpfvv1i" path="res://asset_scenes/Coin/Coin.cs" id="2_ou7jl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ou7jl"]
 size = Vector3(0.6679077, 0.7554321, 0.10105896)
