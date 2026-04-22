@@ -4,12 +4,11 @@
 
 [node name="Level1" type="Node3D" unique_id=2092771699]
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=585964421]
-transform = Transform3D(-0.9629942, 0.007256193, 0.2694243, 0.023927268, 0.9979922, 0.058644306, -0.26845777, 0.06292072, -0.96123433, 0.034698963, 1.0626607, -3.4223387)
-fov = 29.152704
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1767267271]
 transform = Transform3D(0.31756943, -9.464307e-09, -0.94823503, 0.7533722, 0.60726494, 0.25230873, 0.57582986, -0.7944994, 0.19284882, -11.648664, 9.895945, -0.9357557)
 shadow_enabled = true
 
 [node name="Large Platform" parent="." unique_id=238628005 instance=ExtResource("1_kyxg0")]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1300631725]
+transform = Transform3D(-0.99772817, -0.041183237, -0.053314183, -0.05958067, 0.90877914, 0.41300157, 0.03144211, 0.41523957, -0.9091691, 0, 3.8426285, -4.650946)
