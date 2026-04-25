@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dktbokv207ldl"]
+
+[ext_resource type="Script" uid="uid://t7c8pyu4djg4" path="res://asset_scenes/Players/RunnerPlayer.cs" id="1_ddnya"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_m1nv4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gtnfh"]
+
+[node name="RunnerPlayer" type="CharacterBody3D" unique_id=1936396485]
+script = ExtResource("1_ddnya")
+
+[node name="Neck" type="Node3D" parent="." unique_id=1936396486]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Neck" unique_id=660952025]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 1.8214827, 1.5945945)
+current = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=103971551]
+mesh = SubResource("CapsuleMesh_m1nv4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=729075720]
+shape = SubResource("CapsuleShape3D_gtnfh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=616791662]
+transform = Transform3D(1, 0, 0, 0, -0.88931274, 0.45729968, 0, -0.45729968, -0.88931274, 0, 2.979075, -5.080653)

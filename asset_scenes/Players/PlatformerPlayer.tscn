@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://vw8h1q4uaabo"]
 
-[ext_resource type="Script" uid="uid://bv88obuwu7nxj" path="res://asset_scenes/Player/Player.cs" id="1_xhfnw"]
+[ext_resource type="Script" uid="uid://bv88obuwu7nxj" path="res://asset_scenes/Players/PlatformerPlayer.cs" id="1_xhfnw"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_m1nv4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gtnfh"]
 
-[node name="Player" type="CharacterBody3D" unique_id=1936396485]
+[node name="PlatformerPlayer" type="CharacterBody3D" unique_id=1936396485]
 script = ExtResource("1_xhfnw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=103971551]

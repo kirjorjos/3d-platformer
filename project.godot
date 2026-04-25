@@ -14,6 +14,10 @@ config/name="3D Platformer"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlatformLogic="*uid://2e7ybuf6xd6s"
+
 [dotnet]
 
 project/assembly_name="3D Platformer"

@@ -11,7 +11,7 @@ public partial class Coin : Area3D {
 		RotateY((float)(ROTATION_SPEED * delta));
 	}
 
-	public void OnBodyEntered() {
+	public void OnBodyEntered(Node3D _body) {
 		QueueFree();
 	}
 }

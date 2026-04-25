@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bnlsrqprkuhip"]
+
+[ext_resource type="PackedScene" uid="uid://yt68i4i7piwh" path="res://asset_scenes/Platforms/LargePlatform.tscn" id="1_wuapa"]
+[ext_resource type="PackedScene" uid="uid://ciro7lx2g0517" path="res://asset_scenes/Coin/Coin.tscn" id="2_wdivo"]
+
+[node name="LargePlatformCoin1" unique_id=238628005 instance=ExtResource("1_wuapa")]
+
+[node name="Coin" parent="." index="0" unique_id=1840414157 instance=ExtResource("2_wdivo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4742823, 0.85666585, 0)

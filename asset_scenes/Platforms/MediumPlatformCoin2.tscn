@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://r80tklg73g1f"]
+
+[ext_resource type="PackedScene" uid="uid://u1hm27uwr3ss" path="res://asset_scenes/Platforms/MediumPlatformCoin1.tscn" id="1_ks2hi"]
+
+[node name="MediumPlatformCoin2" unique_id=1469296818 instance=ExtResource("1_ks2hi")]
+
+[node name="Coin" parent="." index="2" unique_id=1840414157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.051741302, 0.6906694, 0)

@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://d2rfwurc6rrj5"]
+
+[ext_resource type="PackedScene" uid="uid://yt68i4i7piwh" path="res://asset_scenes/Platforms/LargePlatform.tscn" id="1_kyxg0"]
+[ext_resource type="PackedScene" uid="uid://vw8h1q4uaabo" path="res://asset_scenes/Players/PlatformerPlayer.tscn" id="2_mc20k"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mc20k"]
+sky_top_color = Color(0.3529827, 0.36182746, 0.89774054, 1)
+sky_horizon_color = Color(0.54374063, 0.6952733, 0.6275228, 1)
+ground_horizon_color = Color(0.54509807, 0.69411767, 0.627451, 1)
+
+[sub_resource type="Sky" id="Sky_cove1"]
+sky_material = SubResource("ProceduralSkyMaterial_mc20k")
+
+[sub_resource type="Environment" id="Environment_dwyiq"]
+background_mode = 2
+sky = SubResource("Sky_cove1")
+
+[node name="Level1" type="Node3D" unique_id=2092771699]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1767267271]
+transform = Transform3D(0.586004, 0.23660395, -0.7749954, 0.5701046, 0.5592757, 0.60182345, 0.57582986, -0.7944994, 0.1928488, -13.211883, 11.258192, -0.9357557)
+shadow_enabled = true
+
+[node name="LargePlatform" parent="." unique_id=238628005 instance=ExtResource("1_kyxg0")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2030159899]
+environment = SubResource("Environment_dwyiq")
+
+[node name="PlatformerPlayer" parent="." unique_id=1936396485 instance=ExtResource("2_mc20k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42698, 0)

@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_sy4o2"]
 size = Vector3(5.48, 0.574, 3.67)
 
-[node name="Large Platform" unique_id=238628005 instance=ExtResource("1_iu2wg")]
+[node name="LargePlatform" unique_id=238628005 instance=ExtResource("1_iu2wg")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=278972384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
