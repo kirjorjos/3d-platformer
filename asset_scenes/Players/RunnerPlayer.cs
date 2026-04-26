@@ -1,7 +1,7 @@
 using Godot;
 
 public partial class RunnerPlayer : Player {
-	private const float MAX_YAW_DEG = 90;
+	private const float MAX_YAW_DEG = 45;
 	private const float SPEED_X = 0.2f;
 	private PlatformLogic platformLogic;
 	private float accumulatedYaw;
@@ -31,15 +31,15 @@ public partial class RunnerPlayer : Player {
 		return velocity;
 	}
 
-	protected override void RotateCameraH(Vector2 movement, float speed) {
-		float rotation = movement.X * speed;
-		accumulatedYaw += rotation;
-		float centerYaw = neckYaw;
-		accumulatedYaw = Mathf.Clamp(accumulatedYaw, centerYaw - Mathf.DegToRad(MAX_YAW_DEG), centerYaw + Mathf.DegToRad(MAX_YAW_DEG));
-		float newYaw = accumulatedYaw;
-		float actualRotation = newYaw - neckYaw;
-		neckYaw = newYaw;
-		neck.Rotation = new Vector3(neck.Rotation.X, newYaw, neck.Rotation.Z);
-		RotateY(actualRotation);
-	}
+protected override void RotateCameraH(Vector2 movement, float speed) {
+        float rotation = movement.X * speed;
+        float centerYaw = neckYaw;
+        float newYaw = accumulatedYaw + rotation;
+        newYaw = Mathf.Clamp(newYaw, centerYaw - Mathf.DegToRad(MAX_YAW_DEG), centerYaw + Mathf.DegToRad(MAX_YAW_DEG));
+        float actualRotation = newYaw - accumulatedYaw;
+        accumulatedYaw = newYaw;
+
+        neck.RotateY(actualRotation);
+        RotateY(actualRotation);
+    }
 }
