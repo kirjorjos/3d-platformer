@@ -7,16 +7,24 @@ public partial class PlatformLogic : Node {
 
 	private const float GENERATION_WIDTH = 15f;
 	private const float CLEANUP_DISTANCE = 10f;
-	private const int MIN_PLATFORM_Z_GAP = 2;
-	private const int MAX_PLATFORM_Z_GAP = 3;
-	private const int MIN_PLATFORM_Y_GAP = 0;
-	private const int MAX_PLATFORM_Y_GAP = 2;
-	private const int MAX_PLATFORM_X_GAP = 3;
+	private const float MIN_PLATFORM_Z_GAP = 2;
+	private const float MAX_PLATFORM_Z_GAP = 3;
+	private const float MIN_PLATFORM_Y_GAP = 0;
+	private const float MAX_PLATFORM_Y_GAP = 2;
+	private const float MAX_PLATFORM_X_GAP = 3;
+	private const float CLOUD_HEIGHT = 25;
+	private const float CLOUD_MOVEMENT_SPEED = 1.8f;
 	private const float MIN_X = -10f;
 	private const float MAX_X = 10f;
 	private const float MIN_Y = -20f;
 	private const float MAX_Y = 20f;
 	private const float MULTIPLE_PLATFORM_IN_LANE_CHANCE = 0.5f;
+	private const float CLOUD_Y_VARIATION = 2f;
+	private const float CLOUD_MIN_SCALE = 0.8f;
+	private const float CLOUD_MAX_SCALE = 1.2f;
+	private const float CLOUD_SPAWN_INTERVAL = 3f;
+	private const float CLOUD_SPAWN_CHANCE = 0.7f;
+	private const float CLOUD_SPAWN_Z_OFFSET_MAX = 5f;
 
 	private List<PackedScene> platforms = new List<PackedScene>();
 	private List<Vector3> platformSizes = new List<Vector3>();
@@ -27,6 +35,9 @@ public partial class PlatformLogic : Node {
 	private float virtualPlayerX;
 	private Random rng = new Random();
 	private bool firstSpawnDone = false;
+	private List<PackedScene> clouds = new List<PackedScene>();
+	private float virtualWorldZ = 0f;
+	private float lastCloudSpawnWorldZ = -1000f;
 
 	private class Lane {
 		public Vector3 nextSpawnPos;
@@ -53,6 +64,11 @@ public partial class PlatformLogic : Node {
 			instance.QueueFree();
 		}
 
+		string[] cloudDirFiles = DirAccess.GetFilesAt("./asset_scenes/Clouds");
+		clouds.AddRange(cloudDirFiles.Select(file =>
+			(PackedScene)GD.Load($"res://asset_scenes/Clouds/{file}")
+		));
+
 		float maxPlatformDim = platformSizes.Max(p => Math.Max(p.X, p.Z));
 		laneWidth = maxPlatformDim / 2f + MAX_PLATFORM_X_GAP + maxPlatformDim / 2f;
 		laneCount = (int)Math.Ceiling((MAX_X - MIN_X) / laneWidth);
@@ -71,25 +87,32 @@ public partial class PlatformLogic : Node {
 	}
 
 	public void MovePlatforms(Vector3 movement, Player player, Node scene, bool shouldMove = true) {
+
 		if (movement.X == 0 && movement.Y == 0 && movement.Z == 0) {
 			GeneratePlatform(scene, player);
 			CleanBehind(scene);
+			GenerateClouds(scene, player);
+			CleanCloudsBehind(scene);
 			return;
 		}
 
 		if (shouldMove) {
 			Vector3 platformMovement = new Vector3(movement.X, movement.Y, movement.Z);
 
-			foreach (Node child in scene.GetChildren()) {
-				if (child is StaticBody3D platform) {
-					platform.GlobalPosition += platformMovement;
-					platform.GlobalPosition = new Vector3(
-						platform.GlobalPosition.X,
-						Mathf.Clamp(platform.GlobalPosition.Y, MIN_Y, MAX_Y),
-						platform.GlobalPosition.Z
-					);
-				}
+			foreach (StaticBody3D platform in GetTree().GetNodesInGroup("Platforms")) {
+				platform.GlobalPosition += platformMovement;
+				platform.GlobalPosition = new Vector3(
+					platform.GlobalPosition.X,
+					Mathf.Clamp(platform.GlobalPosition.Y, MIN_Y, MAX_Y),
+					platform.GlobalPosition.Z
+				);
 			}
+
+			foreach (Node3D cloud in GetTree().GetNodesInGroup("Clouds")) {
+				cloud.GlobalPosition += platformMovement;
+			}
+
+			virtualWorldZ += Math.Abs(platformMovement.Z);
 
 			if (player.isDead || player.GlobalPosition.Y < (MIN_Y - 10f)) {
 				if (!player.isDead) {
@@ -106,6 +129,8 @@ public partial class PlatformLogic : Node {
 
 		GeneratePlatform(scene, player);
 		CleanBehind(scene);
+		GenerateClouds(scene, player);
+		CleanCloudsBehind(scene);
 	}
 
 	private void GeneratePlatform(Node scene, Player player) {
@@ -164,10 +189,10 @@ public partial class PlatformLogic : Node {
 			float currentYSize = lanes[currentLane].currentPlatformSize.Y;
 			float nextYSize = nextPlatformSize.Y;
 
-			float zGap = rng.Next(MIN_PLATFORM_Z_GAP, MAX_PLATFORM_Z_GAP + 1);
+			float zGap = (float)(MIN_PLATFORM_Z_GAP+(rng.NextDouble()*(MAX_PLATFORM_Z_GAP-MIN_PLATFORM_Z_GAP)));
 			float zOffset = zGap + currentZSize / 2f + nextZSize / 2f;
 
-			float yGap = rng.Next(MIN_PLATFORM_Y_GAP, MAX_PLATFORM_Y_GAP + 1);
+			float yGap = (float)(MIN_PLATFORM_Y_GAP+(rng.NextDouble()*(MAX_PLATFORM_Y_GAP-MIN_PLATFORM_Y_GAP)));
 			float minRequiredYShift = yGap + currentYSize / 2f + nextYSize / 2f;
 			float yOffset = yGap < minRequiredYShift ? minRequiredYShift : yGap;
 
@@ -203,6 +228,7 @@ public partial class PlatformLogic : Node {
 		if (platformIndex < 0) platformIndex = rng.Next(platforms.Count);
 		StaticBody3D newPlatform = platforms[platformIndex].Instantiate<StaticBody3D>();
 		scene.AddChild(newPlatform);
+		newPlatform.AddToGroup("Platforms");
 		newPlatform.GlobalPosition = pos;
 
 		int rotationSteps = rng.Next(4);
@@ -222,6 +248,50 @@ public partial class PlatformLogic : Node {
 		}
 	}
 
+	private void GenerateClouds(Node scene, Player player) {
+		if (virtualWorldZ < lastCloudSpawnWorldZ + CLOUD_SPAWN_INTERVAL || clouds.Count == 0) return;
+
+		float spawnAheadZ = virtualWorldZ + GENERATION_WIDTH;
+
+		if (rng.NextDouble() < CLOUD_SPAWN_CHANCE) {
+			float cloudX = (float)(MIN_X + rng.NextDouble() * (MAX_X - MIN_X));
+			float randomSignedScalar = (float)((rng.NextDouble() - 0.5) * 2);
+			float cloudYVariation = randomSignedScalar * CLOUD_Y_VARIATION;
+			float cloudY = CLOUD_HEIGHT + cloudYVariation;
+			float cloudZ = spawnAheadZ + (float)(rng.NextDouble() * CLOUD_SPAWN_Z_OFFSET_MAX);
+			SpawnCloud(new Vector3(cloudX, cloudY, cloudZ), scene);
+		}
+
+		lastCloudSpawnWorldZ = virtualWorldZ;
+	}
+
+	private void SpawnCloud(Vector3 pos, Node scene) {
+		int cloudIndex = rng.Next(clouds.Count);
+		Node3D newCloud = clouds[cloudIndex].Instantiate<Node3D>();
+		scene.AddChild(newCloud);
+		newCloud.AddToGroup("Clouds");
+		newCloud.GlobalPosition = pos;
+
+		float scale = (float)(CLOUD_MIN_SCALE + rng.NextDouble() * (CLOUD_MAX_SCALE - CLOUD_MIN_SCALE));
+		newCloud.Scale = new Vector3(scale, scale, scale);
+
+		int rotationSteps = rng.Next(4);
+		if (rotationSteps > 0) newCloud.RotateY((float)(rotationSteps * Math.PI / 2f));
+	}
+
+	private void CleanCloudsBehind(Node scene) {
+		float playerZ = scene.GetNode<Player>("RunnerPlayer").GlobalPosition.Z;
+		float cleanupThreshold = playerZ - CLEANUP_DISTANCE;
+
+		foreach (Node3D cloud in GetTree().GetNodesInGroup("Clouds")) {
+			if (cloud.GlobalPosition.Z < cleanupThreshold) cloud.QueueFree();
+		}
+	}
+
 	public override void _Process(double delta) {
+		float deltaF = (float)delta;
+		foreach (Node3D cloud in GetTree().GetNodesInGroup("Clouds")) {
+			cloud.GlobalPosition += new Vector3(CLOUD_MOVEMENT_SPEED * deltaF, 0, 0);
+		}
 	}
 }

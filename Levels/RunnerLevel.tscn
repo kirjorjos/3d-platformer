@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dns6rm5lftcbu"]
 
 [ext_resource type="PackedScene" uid="uid://dktbokv207ldl" path="res://asset_scenes/Players/RunnerPlayer.tscn" id="2_0kb4x"]
+[ext_resource type="PackedScene" uid="uid://c8uc3kwgoeiho" path="res://asset_scenes/Sun/Sun.tscn" id="2_76mjl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wcc2u"]
 sky_top_color = Color(0.3529827, 0.36182746, 0.89774054, 1)
@@ -21,3 +22,6 @@ environment = SubResource("Environment_nn734")
 
 [node name="RunnerPlayer" parent="." unique_id=1936396485 instance=ExtResource("2_0kb4x")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="sun" parent="." unique_id=1221059251 instance=ExtResource("2_76mjl")]
+transform = Transform3D(0.09355641, 0.047123555, 0.99449813, -0.44984907, 0.8931046, 0, -0.88819087, -0.44737405, 0.10475415, 0.7919197, 49.593113, 50.314888)
