@@ -36,8 +36,8 @@ public partial class PlatformLogic : Node {
 	private Random rng = new Random();
 	private bool firstSpawnDone = false;
 	private List<PackedScene> clouds = new List<PackedScene>();
-	private float virtualWorldZ = 0f;
-	private float lastCloudSpawnWorldZ = -1000f;
+	private float virtualWorldZ;
+	private float lastCloudSpawnWorldZ;
 
 	private class Lane {
 		public Vector3 nextSpawnPos;
@@ -47,6 +47,11 @@ public partial class PlatformLogic : Node {
 	}
 
 	public override void _Ready() {
+		LoadSceneFiles();
+		SetStartingValues();
+	}
+
+	private void LoadSceneFiles() {
 		string[] platformDirFiles = DirAccess.GetFilesAt("./asset_scenes/Platforms");
 		platforms.AddRange(
 			platformDirFiles.Select(
@@ -73,7 +78,9 @@ public partial class PlatformLogic : Node {
 		laneWidth = maxPlatformDim / 2f + MAX_PLATFORM_X_GAP + maxPlatformDim / 2f;
 		laneCount = (int)Math.Ceiling((MAX_X - MIN_X) / laneWidth);
 		lanes = new Lane[laneCount];
+	}
 
+	private void SetStartingValues() {
 		for (int i = 0; i < laneCount; i++) {
 			lanes[i] = new Lane {
 				nextSpawnPos = new Vector3(MIN_X + (i + 0.5f) * laneWidth, 0, 0),
@@ -84,6 +91,9 @@ public partial class PlatformLogic : Node {
 		}
 
 		lastCleanupX = -1000f;
+		lastCloudSpawnWorldZ = -1000f;
+		virtualWorldZ = 0f;
+		firstSpawnDone = false;
 	}
 
 	public void MovePlatforms(Vector3 movement, Player player, Node scene, bool shouldMove = true) {
@@ -117,6 +127,8 @@ public partial class PlatformLogic : Node {
 			if (player.isDead || player.GlobalPosition.Y < (MIN_Y - 10f)) {
 				if (!player.isDead) {
 					GD.Print("Player fell below death plane");
+					SetStartingValues();
+					Input.MouseMode = Input.MouseModeEnum.Visible;
 					GetTree().ChangeSceneToFile("res://DeathScreen.tscn");
 					player.isDead = true;
 				}
