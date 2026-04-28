@@ -1,16 +1,14 @@
 [gd_scene format=3 uid="uid://ciro7lx2g0517"]
 
-[ext_resource type="PackedScene" uid="uid://wknlhuwkjkp4" path="res://assets/coin.glb" id="1_h5dih"]
+[ext_resource type="PackedScene" uid="uid://4ms4jsvieouy" path="res://assets/coin.glb" id="1_h5dih"]
 [ext_resource type="Script" uid="uid://c4xwwuwpfvv1i" path="res://asset_scenes/Coin/Coin.cs" id="2_ou7jl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ou7jl"]
 size = Vector3(0.6679077, 0.7554321, 0.10105896)
 
-[node name="Coin" unique_id=1840414157 instance=ExtResource("1_h5dih")]
+[node name="Coin" unique_id=227894635 instance=ExtResource("1_h5dih")]
 script = ExtResource("2_ou7jl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1142450039]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1552734e-05, 0.30026245, 0.050209045)
 shape = SubResource("BoxShape3D_ou7jl")
-
-[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
