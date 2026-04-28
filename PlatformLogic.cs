@@ -117,6 +117,7 @@ public partial class PlatformLogic : Node {
 			if (player.isDead || player.GlobalPosition.Y < (MIN_Y - 10f)) {
 				if (!player.isDead) {
 					GD.Print("Player fell below death plane");
+					GetTree().ChangeSceneToFile("res://DeathScreen.tscn");
 					player.isDead = true;
 				}
 				return;
