@@ -18,6 +18,11 @@ config/icon="res://icon.svg"
 
 PlatformLogic="*uid://2e7ybuf6xd6s"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [dotnet]
 
 project/assembly_name="3D Platformer"

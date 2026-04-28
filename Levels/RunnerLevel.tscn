@@ -4,9 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://c8uc3kwgoeiho" path="res://asset_scenes/Sun/Sun.tscn" id="2_76mjl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wcc2u"]
-sky_top_color = Color(0.3529827, 0.36182746, 0.89774054, 1)
-sky_horizon_color = Color(0.54374063, 0.6952733, 0.6275228, 1)
-ground_horizon_color = Color(0.54509807, 0.69411767, 0.627451, 1)
+sky_top_color = Color(0.3254902, 0.69803923, 0.90588236, 1)
+sky_horizon_color = Color(0.32367474, 0.69732404, 0.9057739, 1)
+ground_bottom_color = Color(0.3254902, 0.69803923, 0.90588236, 1)
+ground_horizon_color = Color(0.3254902, 0.69803923, 0.90588236, 1)
 
 [sub_resource type="Sky" id="Sky_cove1"]
 sky_material = SubResource("ProceduralSkyMaterial_wcc2u")

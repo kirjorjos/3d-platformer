@@ -1,8 +1,8 @@
 using Godot;
 
 public partial class Player : CharacterBody3D {
-	protected const float Speed = 2.0f;
-	private const float JUMP_VELOCITY = 7.5f;
+	protected const float Speed = 4.0f;
+	private const float JUMP_VELOCITY = 6.5f;
 	private const float BUTTON_SPEED_V = 0.1f;
 	private const float BUTTON_SPEED_H = 0.01f;
 	private const float MAX_PITCH_DEG = 45;
