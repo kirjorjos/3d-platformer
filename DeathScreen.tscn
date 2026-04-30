@@ -3,6 +3,34 @@
 [ext_resource type="Texture2D" uid="uid://bpv60gx744s5e" path="res://assets/U died.png" id="1_58ct5"]
 [ext_resource type="Script" uid="uid://cyyyhbf7tkpls" path="res://DeathScreen.cs" id="1_80igo"]
 
+[sub_resource type="Gradient" id="Gradient_80igo"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.7922078)
+colors = PackedColorArray(0, 0, 0, 0, 0.06666667, 0.84313726, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gircr"]
+gradient = SubResource("Gradient_80igo")
+width = 340
+height = 120
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_0x2kd"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.7922078)
+colors = PackedColorArray(0, 0, 0, 0, 0.06666667, 0.84313726, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rxp3u"]
+gradient = SubResource("Gradient_0x2kd")
+width = 340
+height = 120
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 1)
+
 [node name="Node2D" type="Node2D" unique_id=1353332104]
 script = ExtResource("1_80igo")
 
@@ -18,19 +46,9 @@ offset_left = 800.0
 offset_top = 600.0
 offset_right = 808.0
 offset_bottom = 608.0
-theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 0)
-theme_override_colors/font_focus_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/font_hover_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
-theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 0.8745098, 0)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_normal_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_focus_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_hover_color = Color(0.47058824, 1, 1, 0.39215687)
-theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_disabled_color = Color(1, 1, 1, 0)
+focus_neighbor_top = NodePath("../QuitToTitle")
+focus_neighbor_bottom = NodePath("../QuitToTitle")
+texture_focused = SubResource("GradientTexture2D_gircr")
 
 [node name="QuitToTitle" type="TextureButton" parent="." unique_id=606953340]
 modulate = Color(5.912981, 5.912981, 5.912981, 0.25490198)
@@ -39,19 +57,9 @@ offset_left = 800.0
 offset_top = 750.0
 offset_right = 1140.0
 offset_bottom = 870.0
-theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 0)
-theme_override_colors/font_focus_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/font_hover_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
-theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 0.8745098, 0)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_normal_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_focus_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_hover_color = Color(0.47058824, 1, 1, 0.39215687)
-theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 0)
-theme_override_colors/icon_disabled_color = Color(1, 1, 1, 0)
+focus_neighbor_top = NodePath("../Restart")
+focus_neighbor_bottom = NodePath("../Restart")
+texture_focused = SubResource("GradientTexture2D_rxp3u")
 
 [connection signal="pressed" from="Restart" to="." method="OnRestartPressed"]
 [connection signal="pressed" from="QuitToTitle" to="." method="OnQuitPressed"]

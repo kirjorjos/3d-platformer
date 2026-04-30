@@ -2,7 +2,15 @@ using Godot;
 using System;
 
 public partial class DeathScreen : Node2D {
-	// Called when the node enters the scene tree for the first time.
+	TextureButton restartButton;
+	TextureButton quitButton;
+
+	public override void _Ready() {
+		 restartButton = GetNode<TextureButton>("Restart");
+		 quitButton = GetNode<TextureButton>("QuitToTitle");
+
+		 restartButton.GrabFocus();
+	}
 	public void OnRestartPressed() {
 		GetTree().ChangeSceneToFile("res://Levels/RunnerLevel.tscn");
 	}
