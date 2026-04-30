@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dktbokv207ldl"]
 
 [ext_resource type="Script" uid="uid://t7c8pyu4djg4" path="res://asset_scenes/Players/RunnerPlayer.cs" id="1_ddnya"]
+[ext_resource type="AudioStream" uid="uid://f64axh6erl1v" path="res://assets/Death.wav" id="2_eu0rl"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_m1nv4"]
 
@@ -64,10 +65,9 @@ mesh = SubResource("CylinderMesh_eu0rl")
 transform = Transform3D(0.5, 0, 0, 0, 0.05, 0, 0, 0, 0.5, -0.903, -0.8775635, 0)
 mesh = SubResource("CylinderMesh_eu0rl")
 
-[node name="Antena" type="MeshInstance3D" parent="." unique_id=1841990003]
-transform = Transform3D(0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.3, 0, 1.0850241, 0)
+[node name="Antena" type="MeshInstance3D" parent="." unique_id=1210397166]
+transform = Transform3D(0.12, 0, 0, 0, 1, 0, 0, 0, 0.12, 0, 0.66538405, 0)
 mesh = SubResource("CapsuleMesh_eu0rl")
 
-[node name="Antena2" type="MeshInstance3D" parent="." unique_id=1210397166]
-transform = Transform3D(0.12, 0, 0, 0, 0.2, 0, 0, 0, 0.12, 0, 1.6274023, 0)
-mesh = SubResource("CapsuleMesh_eu0rl")
+[node name="Death" type="AudioStreamPlayer" parent="." unique_id=386894878]
+stream = ExtResource("2_eu0rl")

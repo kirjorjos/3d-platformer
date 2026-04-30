@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public partial class PlatformLogic : Node {
 
@@ -98,7 +99,7 @@ public partial class PlatformLogic : Node {
 		score = 0;
 	}
 
-	public void MovePlatforms(Vector3 movement, Player player, Node scene, bool shouldMove = true) {
+	public async Task MovePlatforms(Vector3 movement, RunnerPlayer player, Node scene, bool shouldMove = true) {
 
 		if (movement.X == 0 && movement.Y == 0 && movement.Z == 0) {
 			GeneratePlatform(scene, player);
@@ -128,11 +129,12 @@ public partial class PlatformLogic : Node {
 
 			if (player.isDead || player.GlobalPosition.Y < (MIN_Y - 10f)) {
 				if (!player.isDead) {
+					player.isDead = true;
 					GD.Print("Player fell below death plane");
+					await player.PlaySound("death");
 					SetStartingValues();
 					Input.MouseMode = Input.MouseModeEnum.Visible;
 					GetTree().ChangeSceneToFile("res://DeathScreen.tscn");
-					player.isDead = true;
 				}
 				return;
 			}

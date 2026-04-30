@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Godot;
 
 public partial class RunnerPlayer : Player {
@@ -6,6 +7,8 @@ public partial class RunnerPlayer : Player {
 	private PlatformLogic platformLogic;
 	private float accumulatedYaw;
 	private float neckYaw;
+	private AudioStreamPlayer music;
+	private AudioStreamPlayer deathSound;
 
 	public override void _Ready() {
 		base._Ready();
@@ -13,6 +16,9 @@ public partial class RunnerPlayer : Player {
 		neckYaw = neck.Rotation.Y;
 		accumulatedYaw = neckYaw;
 		pitch = camera.Rotation.X;
+		music = Level.GetNode<AudioStreamPlayer>("BackgroundMusic");
+		deathSound = GetNode<AudioStreamPlayer>("Death");
+		music.Play();
 	}
 
 	protected override Vector3 HandleActiveMovement(Vector3 velocity, double delta) {
@@ -47,14 +53,38 @@ public partial class RunnerPlayer : Player {
 	}
 
 	protected override void RotateCameraH(Vector2 movement, float speed) {
-        float rotation = movement.X * speed;
-        float centerYaw = neckYaw;
-        float newYaw = accumulatedYaw + rotation;
-        newYaw = Mathf.Clamp(newYaw, centerYaw - Mathf.DegToRad(MAX_YAW_DEG), centerYaw + Mathf.DegToRad(MAX_YAW_DEG));
-        float actualRotation = newYaw - accumulatedYaw;
-        accumulatedYaw = newYaw;
+			float rotation = movement.X * speed;
+			float centerYaw = neckYaw;
+			float newYaw = accumulatedYaw + rotation;
+			newYaw = Mathf.Clamp(newYaw, centerYaw - Mathf.DegToRad(MAX_YAW_DEG), centerYaw + Mathf.DegToRad(MAX_YAW_DEG));
+			float actualRotation = newYaw - accumulatedYaw;
+			accumulatedYaw = newYaw;
 
-        neck.RotateY(actualRotation);
-        RotateY(actualRotation);
-    }
+			neck.RotateY(actualRotation);
+			RotateY(actualRotation);
+	}
+
+	public Task PlaySound(string sound) {
+
+		TaskCompletionSource taskThing = new TaskCompletionSource();
+
+		void OnFinished() {
+			deathSound.Finished -= OnFinished;
+			taskThing.SetResult();
+		}
+
+		switch(sound) {
+			case "background":
+				if (music.Playing) return Task.CompletedTask;
+				music.Play();
+				break;
+			case "death":
+				if (music.Playing) music.Stop();
+				deathSound.Finished += OnFinished;
+				deathSound.Play();
+				break;
+		}
+
+		return taskThing.Task;
+	}
 }

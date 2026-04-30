@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dktbokv207ldl" path="res://asset_scenes/Players/RunnerPlayer.tscn" id="2_0kb4x"]
 [ext_resource type="PackedScene" uid="uid://c8uc3kwgoeiho" path="res://asset_scenes/Sun/Sun.tscn" id="2_76mjl"]
+[ext_resource type="AudioStream" uid="uid://b3wpn71bf4oe" path="res://assets/background-music.wav" id="3_0kb4x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wcc2u"]
 sky_top_color = Color(0.3254902, 0.69803923, 0.90588236, 1)
@@ -40,3 +41,6 @@ size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 2
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." unique_id=1010596769]
+stream = ExtResource("3_0kb4x")

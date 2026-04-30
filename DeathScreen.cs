@@ -12,6 +12,7 @@ public partial class DeathScreen : Node2D {
 		 restartButton.GrabFocus();
 	}
 	public void OnRestartPressed() {
+		Input.MouseMode = Input.MouseModeEnum.Captured;
 		GetTree().ChangeSceneToFile("res://Levels/RunnerLevel.tscn");
 	}
 

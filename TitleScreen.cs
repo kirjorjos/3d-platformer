@@ -13,6 +13,7 @@ public partial class TitleScreen : Node2D {
 	}
 
 	public void OnPlayPressed() {
+		Input.MouseMode = Input.MouseModeEnum.Captured;
 		GetTree().ChangeSceneToFile("res://Levels/RunnerLevel.tscn");
 	}
 
