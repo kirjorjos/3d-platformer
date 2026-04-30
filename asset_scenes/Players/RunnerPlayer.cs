@@ -25,13 +25,28 @@ public partial class RunnerPlayer : Player {
 		Vector3 forwardDir = neck.GlobalTransform.Basis * Vector3.Back;
 		Vector3 platformMovement = forwardDir * moveSpeed + new Vector3(strafe, 0, 0);
 
-		platformLogic.MovePlatforms(platformMovement, this, level, CanMovePlatforms());
+		platformLogic.MovePlatforms(platformMovement, this, Level, CanMovePlatforms());
 
 		velocity.Z = strafe;
 		return velocity;
 	}
 
-protected override void RotateCameraH(Vector2 movement, float speed) {
+	protected override Vector3 ProcessPassiveMovement(Vector3 velocity, double delta) {
+		if (!IsOnFloor()) {
+			velocity += GetGravity() * (float)delta;
+		} else if (!hasLanded) {
+			hasLanded = true;
+		}
+		UpdateScore(1);
+		return velocity;
+	}
+
+	public void UpdateScore(int addition) {
+		platformLogic.UpdateScore(addition);
+		Level.GetNode<Label>("CanvasLayer/Label").Text = $"{platformLogic.GetScore()}";
+	}
+
+	protected override void RotateCameraH(Vector2 movement, float speed) {
         float rotation = movement.X * speed;
         float centerYaw = neckYaw;
         float newYaw = accumulatedYaw + rotation;

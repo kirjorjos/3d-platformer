@@ -10,7 +10,12 @@ public partial class Player : CharacterBody3D {
 	private const float MOUSE_SPEED_V = 0.01f;
 	private const float MOUSE_SPEED_H = 0.001f;
 	protected float pitch = 0.0f;
-	protected Node3D level;
+	private Node3D level;
+	protected int score;
+	public Node3D Level {
+		get { return level; }
+		protected set { level = value; }
+	}
 	protected Node3D neck;
 	protected Camera3D camera;
 
@@ -38,6 +43,8 @@ public partial class Player : CharacterBody3D {
 		}
 	}
 
+	
+
 	public override void _PhysicsProcess(double delta) {
 		Vector3 velocity = Velocity;
 
@@ -50,7 +57,7 @@ public partial class Player : CharacterBody3D {
 		MoveAndSlide();
 	}
 
-	protected Vector3 ProcessPassiveMovement(Vector3 velocity, double delta) {
+	protected virtual Vector3 ProcessPassiveMovement(Vector3 velocity, double delta) {
 		if (!IsOnFloor()) {
 			velocity += GetGravity() * (float)delta;
 		} else if (!hasLanded) {

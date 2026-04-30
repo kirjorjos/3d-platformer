@@ -26,3 +26,17 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 
 [node name="sun" parent="." unique_id=1221059251 instance=ExtResource("2_76mjl")]
 transform = Transform3D(0.09355641, 0.047123555, 0.99449813, -0.44984907, 0.8931046, 0, -0.88819087, -0.44737405, 0.10475415, 0.7919197, 49.593113, 50.314888)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=128104962]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=934301069]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -181.0
+offset_bottom = 129.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 2

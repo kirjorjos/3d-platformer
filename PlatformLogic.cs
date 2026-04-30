@@ -38,6 +38,7 @@ public partial class PlatformLogic : Node {
 	private List<PackedScene> clouds = new List<PackedScene>();
 	private float virtualWorldZ;
 	private float lastCloudSpawnWorldZ;
+	private int score;
 
 	private class Lane {
 		public Vector3 nextSpawnPos;
@@ -94,6 +95,7 @@ public partial class PlatformLogic : Node {
 		lastCloudSpawnWorldZ = -1000f;
 		virtualWorldZ = 0f;
 		firstSpawnDone = false;
+		score = 0;
 	}
 
 	public void MovePlatforms(Vector3 movement, Player player, Node scene, bool shouldMove = true) {
@@ -306,5 +308,13 @@ public partial class PlatformLogic : Node {
 		foreach (Node3D cloud in GetTree().GetNodesInGroup("Clouds")) {
 			cloud.GlobalPosition += new Vector3(CLOUD_MOVEMENT_SPEED * deltaF, 0, 0);
 		}
+	}
+
+	public void UpdateScore(int addition) {
+		score += addition;
+	}
+
+	public int GetScore() {
+		return score;
 	}
 }
